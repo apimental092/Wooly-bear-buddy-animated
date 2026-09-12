@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#6b4a32">
+<link rel="manifest" href="manifest.json">
+<title>🍁 Maple's Woolly Bear Buddy</title>
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#30251e;background:#efe5d5;--wood:#6b4a32;--leaf:#65794c;--cream:#fffaf1;--line:#d6c3a9;--orange:#b65c27}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(#eee4d4,#d8c7ae);min-height:100vh}
+main{max-width:600px;margin:auto;padding:14px 12px 36px}
+h1{margin:3px 0;font-size:29px}.sub{color:#6e5b4c;margin-bottom:12px}
+.card{background:rgba(255,250,241,.94);border:1px solid var(--line);border-radius:23px;padding:14px;margin:12px 0;box-shadow:0 7px 22px #4b362515}
+.woodtitle{background:linear-gradient(#8a6545,#68472f);color:#fff8e9;border-radius:18px;padding:13px 15px;box-shadow:inset 0 1px #ffffff33}
+.scene{height:285px;border-radius:20px;overflow:hidden;position:relative;border:1px solid #826647;background:linear-gradient(#a9c9d2 0 48%,#6d754d 48% 100%);transition:.4s}
+.scene.night{background:linear-gradient(#263a55 0 48%,#4c5d40 48% 100%)}
+.skyglow{position:absolute;inset:0;background:radial-gradient(circle at 78% 20%,#fff7bb66,transparent 22%);pointer-events:none}.night .skyglow{background:radial-gradient(circle at 78% 20%,#dce9ff22,transparent 22%)}
+.sun,.moon{position:absolute;right:22px;top:15px;font-size:40px}.moon{display:none}.night .sun{display:none}.night .moon{display:block}
+.ground{position:absolute;left:-5%;right:-5%;bottom:-25px;height:115px;background:radial-gradient(ellipse at 15% 45%,#718252 0 12%,transparent 13%),radial-gradient(ellipse at 55% 25%,#7b8b5a 0 11%,transparent 12%),linear-gradient(#596441,#3f4930);border-radius:50% 50% 0 0}
+.moss{position:absolute;bottom:31px;left:5%;width:150px;height:48px;background:radial-gradient(ellipse,#82935f 0 45%,transparent 46%);filter:blur(.4px)}
+.log{position:absolute;right:7%;bottom:54px;width:135px;height:76px;border-radius:38px 38px 13px 13px;background:linear-gradient(90deg,#4b3526,#795b3d 48%,#4e3829);box-shadow:inset -10px -8px 15px #24170e88}.log:after{content:"";position:absolute;right:10px;top:10px;width:48px;height:48px;border-radius:50%;border:5px solid #5b422f;background:#8b6847}
+.leaf{position:absolute;bottom:42px;left:22%;width:125px;height:62px;border-radius:100% 5% 100% 5%;background:linear-gradient(145deg,#ad7a42,#79532d);transform:rotate(-9deg);box-shadow:0 5px 7px #1e160d44}.leaf:after{content:"";position:absolute;width:105px;height:3px;left:9px;top:30px;background:#5c3d23;transform:rotate(-7deg)}
+.mush{position:absolute;bottom:45px;font-size:28px}.m1{left:9%}.m2{left:74%}
+.bear{position:absolute;left:50%;bottom:76px;transform:translateX(-50%) rotate(-4deg);height:65px;display:flex;align-items:center;filter:drop-shadow(0 8px 4px #17100c55);transition:.25s}.bear.wiggle{animation:wiggle .28s ease}@keyframes wiggle{0%,100%{transform:translateX(-50%) rotate(-4deg)}50%{transform:translateX(-50%) rotate(4deg) translateY(-5px)}}
+.seg{width:36px;height:58px;border-radius:50%;margin-left:-7px;position:relative;box-shadow:inset 5px 4px 8px #ffffff22,inset -7px -6px 8px #0007}.black{background:radial-gradient(circle at 35% 28%,#666 0 7%,#242424 20%,#080808 72%)}.orange{background:radial-gradient(circle at 35% 28%,#e89a4d 0 6%,#b85c24 28%,#6f2d11 80%)}
+.seg:after{content:"";position:absolute;inset:-3px;border-radius:50%;border:2px dotted #0006}
+.head{width:55px;height:55px;border-radius:50%;margin-left:-7px;position:relative;background:radial-gradient(circle at 35% 28%,#777 0 7%,#222 24%,#070707 72%);box-shadow:inset 5px 4px 8px #ffffff22,inset -7px -6px 8px #0008}.eye{position:absolute;width:7px;height:7px;border-radius:50%;background:#fff;right:11px;top:17px;box-shadow:0 0 0 2px #000}.eye:after{content:"";position:absolute;width:2px;height:2px;border-radius:50%;background:#111;left:2px;top:2px}
+.legs{position:absolute;left:8px;right:37px;bottom:-11px;display:flex;justify-content:space-between}.leg{width:7px;height:17px;background:#151515;border-radius:9px;transform:rotate(12deg)}
+@media(max-width:430px){.scene{height:260px}.seg{width:29px;height:48px}.head{width:46px;height:46px}.bear{bottom:71px}.log{width:115px}.leaf{left:18%}}
+.name{text-align:center;font-size:23px;font-weight:850;margin:9px 0 5px}.msg{background:#f4eadb;padding:11px;border-radius:15px;text-align:center;min-height:43px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.stat{background:#f6ecdf;border-radius:16px;padding:10px}.stat b{display:block;font-size:11px;color:#6d594a}.stat strong{font-size:17px}.bar{height:9px;background:#dfd1c0;border-radius:99px;margin-top:6px;overflow:hidden}.fill{height:100%;border-radius:99px;transition:.3s;background:var(--orange)}
+.actions{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:10px}button,input{font:inherit}button{min-height:47px;border:0;border-radius:14px;padding:10px 11px;background:#eadbc9;color:#30251e;font-weight:760}button.primary{background:var(--wood);color:#fffaf1}button:active{transform:scale(.98)}input{width:100%;padding:13px;border:1px solid #ccb89d;border-radius:13px;margin:7px 0 9px;background:#fffdf8}
+.pills{display:flex;gap:6px;flex-wrap:wrap}.pill{padding:7px 9px;border-radius:999px;background:#eadbc9;font-size:12px}.muted{color:#756353;font-size:13px}.badge{display:flex;gap:10px;align-items:center;background:#f7eee2;border-radius:14px;padding:9px;margin-top:7px}.badge>span:first-child{font-size:25px}.footer{text-align:center;color:#7d6b5b;font-size:12px;margin-top:16px}
+
+/* Living Maple animations */
+.bear{will-change:transform}
+.bear.roam{animation:mapleRoam 13s ease-in-out infinite alternate}
+@keyframes mapleRoam{
+  0%{left:24%;transform:translateX(-50%) rotate(-5deg)}
+  45%{left:48%;transform:translateX(-50%) rotate(4deg)}
+  100%{left:72%;transform:translateX(-50%) rotate(-3deg)}
+}
+.bear.roam .seg{animation:bodyBob .42s ease-in-out infinite alternate}
+.bear.roam .seg:nth-child(2n){animation-delay:.11s}
+@keyframes bodyBob{from{transform:translateY(1px)}to{transform:translateY(-4px)}}
+.bear.roam .leg{animation:legStep .24s ease-in-out infinite alternate}
+.bear.roam .leg:nth-child(2n){animation-delay:.12s}
+@keyframes legStep{from{transform:rotate(22deg)}to{transform:rotate(-18deg) translateY(2px)}}
+.bear.eat{animation:eat 1.3s ease-in-out 2}
+@keyframes eat{0%,100%{transform:translateX(-50%) rotate(-4deg)}30%{transform:translateX(-50%) rotate(-12deg) translateY(6px)}60%{transform:translateX(-50%) rotate(5deg) translateY(-2px)}}
+.bear.sleep{animation:breath 2.4s ease-in-out infinite}
+@keyframes breath{0%,100%{transform:translateX(-50%) rotate(-4deg) scale(1)}50%{transform:translateX(-50%) rotate(-4deg) scale(1.035)}}
+.bear.happy{animation:happy 0.35s ease-in-out 4}
+@keyframes happy{0%,100%{transform:translateX(-50%) rotate(-4deg)}50%{transform:translateX(-50%) rotate(7deg) translateY(-9px)}}
+.sparkle{position:absolute;pointer-events:none;font-size:22px;animation:spark 1s ease-out forwards}
+@keyframes spark{0%{opacity:0;transform:scale(.4) translateY(8px)}25%{opacity:1}100%{opacity:0;transform:scale(1.3) translateY(-42px)}}
+@media(prefers-reduced-motion:reduce){.bear.roam,.bear.roam .seg,.bear.roam .leg,.bear.eat,.bear.sleep,.bear.happy{animation:none}}
+
+</style>
+</head>
+<body><main>
+<div class="woodtitle"><h1>🍁 Maple's Woolly Bear Buddy</h1><div>A tiny life to care for. 🖤🧡🖤</div></div>
+
+<section class="card">
+<div class="scene" id="scene"><div class="skyglow"></div><div class="sun">☀️</div><div class="moon">🌙</div><div class="mush m1">🍄</div><div class="mush m2">🍄</div><div class="log"></div><div class="moss"></div><div class="leaf"></div><div class="ground"></div>
+<div class="bear" id="bear"><span class="seg black"></span><span class="seg black"></span><span class="seg orange"></span><span class="seg orange"></span><span class="seg orange"></span><span class="seg black"></span><span class="seg black"></span><span class="seg black"></span><span class="head"><i class="eye"></i></span><div class="legs"><i class="leg"></i><i class="leg"></i><i class="leg"></i><i class="leg"></i></div></div></div>
+<div class="name" id="nameDisplay">Maple</div>
+<div class="msg" id="msg" aria-live="polite">Maple is exploring her little woodland home. 🐛🍁</div>
+</section>
+
+<section class="card"><b>✏️ Name your buddy</b><input id="name" maxlength="20" placeholder="Maple, Cinnamon, Rusty..."><button class="primary" id="saveName" style="width:100%">Save name</button><p class="muted">Everyone who opens the shared game gets their own name and progress on their own device.</p></section>
+
+<section class="card"><div class="grid">
+<div class="stat"><b>🍃 HUNGER</b><strong id="hungerTxt">70%</strong><div class="bar"><div class="fill" id="hunger"></div></div></div>
+<div class="stat"><b>❤️ HAPPINESS</b><strong id="happyTxt">70%</strong><div class="bar"><div class="fill" id="happy"></div></div></div>
+<div class="stat"><b>✨ CLEANLINESS</b><strong id="cleanTxt">85%</strong><div class="bar"><div class="fill" id="clean"></div></div></div>
+<div class="stat"><b>⭐ GROWTH</b><strong id="growthTxt">0/10</strong><div class="bar"><div class="fill" id="growth"></div></div></div>
+</div>
+<div class="actions"><button id="leafBtn">🌿 Fresh leaf</button><button id="clover">☘️ Clover snack</button><button id="cozy">🍂 Cozy nest</button><button id="check">👀 Check on Maple</button><button id="cleanBtn">💩 Clean frass</button><button id="weather">🌦️ Change weather</button></div></section>
+
+<section class="card"><b>🌱 Maple's life journey</b><div class="pills"><span class="pill" id="cater">🐛 Caterpillar</span><span class="pill" id="cocoon">🟤 Cocoon</span><span class="pill" id="moth">🦋 Isabella tiger moth</span></div><p id="stage">Caterpillar • Growth 0/10</p><div class="msg" id="life">Keep caring for your fuzzy friend.</div></section>
+
+<section class="card"><b>🏆 Achievements</b><div id="badges"><div class="muted">Your first achievement is waiting! 🥹</div></div></section>
+<section class="card"><b>🦋 Moth garden</b><p class="muted">After transformation, Maple's garden unlocks flowers for the tiger moth to visit.</p><button class="primary" id="celebrate" style="width:100%">🦋 See the transformation</button></section>
+<section class="card"><b>💾 Progress</b><p class="muted">Your buddy's progress saves automatically on this device.</p><button id="reset" style="width:100%">🔄 Start with a new buddy</button></section>
+<div class="footer">Made with love for fuzzy woolly bears. 🍁🐛</div>
+</main>
+<script>
+(()=>{const $=id=>document.getElementById(id);
+const key="woollyMapleBuddyV2";
+let s=JSON.parse(localStorage.getItem(key)||"null")||{name:"Maple",hunger:70,happy:70,clean:85,growth:0,stage:0,frass:0,weather:0};
+if(!s.name)s.name="Maple";
+const save=()=>localStorage.setItem(key,JSON.stringify(s));const clamp=n=>Math.max(0,Math.min(100,n));
+function render(){
+ const stageNames=["Caterpillar","Growing bigger","Getting fluffier","Finding shelter","Cocoon","Pupa","Isabella tiger moth"];
+ const i=Math.min(s.stage,6);
+ $("nameDisplay").textContent=s.name||"Maple";$("name").value=s.name;
+ $("hungerTxt").textContent=s.hunger+"%";$("happyTxt").textContent=s.happy+"%";$("cleanTxt").textContent=s.clean+"%";$("growthTxt").textContent=Math.min(s.growth,10)+"/10";
+ ["hunger","happy","clean"].forEach(k=>$(k).style.width=s[k]+"%");$("growth").style.width=(Math.min(s.growth,10)*10)+"%";
+ $("stage").textContent=stageNames[i]+" • Growth "+Math.min(s.growth,10)+"/10";$("scene").classList.toggle("night",s.weather%2===1);
+ $("cater").style.opacity=s.stage>=4?".4":"1";$("cocoon").style.opacity=s.stage>=4&&s.stage<6?"1":".4";$("moth").style.opacity=s.stage>=6?"1":".4";
+ $("life").textContent=s.stage>=6?"🥹 MOTH DAY! Maple is now an Isabella tiger moth! Give those wings time to dry.":s.stage>=4?"🟤 Cocoon time! Maple is doing the amazing transformation thing.":"Keep caring for Maple. Every leaf, cozy spot, and check-in helps.";
+ let b=[];if(s.name)b.push(["🏷️","Named Buddy"]);if(s.growth>=1)b.push(["🌿","First Meal"]);if(s.frass)b.push(["💩","Frass Keeper"]);if(s.growth>=4)b.push(["🍂","Cozy Home"]);if(s.stage>=4)b.push(["🟤","Cocoon Watcher"]);if(s.stage>=6)b.push(["🦋","Moth Master"]);
+ $("badges").innerHTML=b.map(v=>'<div class="badge"><span>'+v[0]+'</span><span><b>'+v[1]+'</b></span></div>').join("")||'<div class="muted">Your first achievement is waiting! 🥹</div>';
+}
+function act(k){
+ if(s.stage>=6){$("msg").textContent="Maple is a moth now! 🦋 Let her enjoy the garden.";return}
+ if(k==="leaf"){s.hunger=clamp(s.hunger+23);s.happy=clamp(s.happy+5);$("msg").textContent="CRONCH CRONCH! Maple is munching a fresh leaf. 🌿"}
+ if(k==="clover"){s.hunger=clamp(s.hunger+18);s.happy=clamp(s.happy+12);$("msg").textContent="A fancy clover snack! Maple approves. ☘️"}
+ if(k==="cozy"){s.happy=clamp(s.happy+20);s.clean=clamp(s.clean+4);$("msg").textContent="Maple burrowed into her cozy little nest. 🍂"}
+ if(k==="check"){s.happy=clamp(s.happy+12);$("msg").textContent="Wiggle wiggle! Maple knows you're there. 🥹"}
+ if(k==="clean"){s.frass++;s.clean=100;$("msg").textContent="Fresh habitat! Maple's home is tidy again. 💩✨"}
+ if(k==="weather"){s.weather++;$("msg").textContent=s.weather%2?"Night has fallen. Maple is getting sleepy. 🌙":"The sun is back! ☀️"}
+ s.growth++;if(s.growth>=10)s.stage=6;else if(s.growth>=7)s.stage=4;else if(s.growth>=5)s.stage=3;else if(s.growth>=3)s.stage=2;else if(s.growth>=1)s.stage=1;
+ save();render();$("bear").classList.remove("wiggle");void $("bear").offsetWidth;$("bear").classList.add("wiggle");
+}
+$("saveName").onclick=()=>{let n=$("name").value.trim().slice(0,20);s.name=n||"Maple";save();render();$("msg").textContent="Hi, "+s.name+"! 🧡 This little buddy is yours.";};
+["leafBtn","clover","cozy","check","cleanBtn","weather"].forEach((id,i)=>{const keys=["leaf","clover","cozy","check","clean","weather"];$(id).onclick=()=>act(keys[i])});
+$("celebrate").onclick=()=>{$("msg").textContent=s.stage<6?"Keep caring for Maple — moth day comes after enough growth! 🐛🍁":"🎉 Welcome to Maple's moth garden! 🦋🌸"};
+$("reset").onclick=()=>{if(confirm("Start over with a new buddy?")){s={name:"Maple",hunger:70,happy:70,clean:85,growth:0,stage:0,frass:0,weather:0};save();render();$("msg").textContent="A brand-new adventure for Maple! 🐛🍁"}};
+
+const bear=$("bear"), scene=$("scene");
+bear.classList.add("roam");
+let sleepTimer=null;
+function sparkle(symbol="✨"){
+  const x=document.createElement("span"); x.className="sparkle"; x.textContent=symbol;
+  x.style.left=(35+Math.random()*30)+"%"; x.style.top=(38+Math.random()*18)+"%";
+  scene.appendChild(x); setTimeout(()=>x.remove(),1000);
+}
+function animate(kind){
+  bear.classList.remove("eat","sleep","happy");
+  void bear.offsetWidth;
+  if(kind==="eat"){bear.classList.add("eat"); sparkle("🍃");}
+  if(kind==="happy"){bear.classList.add("happy"); sparkle("❤️");}
+  if(kind==="sleep"){bear.classList.add("sleep");}
+  if(kind==="clean"){sparkle("✨");sparkle("✨");}
+}
+const oldAct=act;
+act=function(k){
+  if(k==="leaf"||k==="clover"){animate("eat");}
+  else if(k==="cozy"||k==="weather"){animate("sleep");}
+  else if(k==="check"){animate("happy");}
+  else if(k==="clean"){animate("clean");}
+  oldAct(k);
+};
+$("saveName").addEventListener("click",()=>setTimeout(()=>{animate("happy")},20));
+render();
+})()
+
+</script>
+</body></html>
