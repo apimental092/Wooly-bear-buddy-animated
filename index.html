@@ -229,6 +229,59 @@ h1{margin:3px 0;font-size:29px}.sub{color:#6e5b4c;margin-bottom:12px}
 #scene #mothVisual{width:150px !important;height:120px !important}
 #scene #cocoonVisual{width:76px !important;height:116px !important}
 
+
+/* v8: moth garden + fully open wings */
+.mothGarden{
+  position:absolute;inset:0;z-index:4;pointer-events:none;
+  opacity:0;visibility:hidden;transition:opacity .7s ease;
+}
+#scene.mothday .mothGarden,#scene.transformed .mothGarden{
+  opacity:1;visibility:visible;
+}
+.mothGarden:before{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:72px;
+  background:linear-gradient(transparent,#50663b66);
+}
+.gardenFlower,.gardenLeaf{
+  position:absolute;font-size:25px;
+  animation:gardenSway 2.8s ease-in-out infinite alternate;
+}
+.f1{left:12%;bottom:36px}.f2{left:28%;bottom:28px;animation-delay:.5s}
+.f3{right:23%;bottom:34px;animation-delay:1s}.f4{right:8%;bottom:30px;animation-delay:1.5s}
+.l1{left:20%;bottom:12px;font-size:34px;animation-delay:.8s}
+.l2{right:18%;bottom:10px;font-size:34px;animation-delay:1.2s}
+.gardenGlow{position:absolute;right:31%;top:45%;font-size:18px;animation:gardenSpark 2s ease-in-out infinite}
+@keyframes gardenSway{from{transform:rotate(-5deg) translateY(1px)}to{transform:rotate(5deg) translateY(-3px)}}
+@keyframes gardenSpark{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}}
+
+/* Replace the tucked/folded moth look with broad, fully-open wings. */
+#scene .mothWing{
+  width:78px !important;height:102px !important;top:8px !important;
+  border-radius:78% 22% 72% 28% !important;
+  background:
+    radial-gradient(circle at 62% 34%,#d6a05d 0 8%,transparent 9%),
+    radial-gradient(circle at 43% 53%,#4b3428 0 11%,transparent 12%),
+    radial-gradient(circle at 66% 68%,#5a3928 0 9%,transparent 10%),
+    linear-gradient(145deg,#e6b678,#9a5b32 62%,#4a3023) !important;
+  border:2px solid #4a3021 !important;
+}
+#scene .leftWing{left:-3px !important;transform-origin:100% 82% !important;transform:rotate(-13deg) !important}
+#scene .rightWing{right:-3px !important;transform-origin:0 82% !important;transform:scaleX(-1) rotate(-13deg) !important}
+#scene.mothday .leftWing,#scene.mothday .rightWing{
+  animation:openWingFlutter 2.4s ease-in-out infinite alternate !important;
+}
+@keyframes openWingFlutter{
+  0%{filter:brightness(.98);transform:rotate(-13deg) scaleY(1)}
+  50%{filter:brightness(1.05)}
+  100%{filter:brightness(1.02);transform:rotate(-9deg) scaleY(.94)}
+}
+#scene.mothday .rightWing{
+  transform:scaleX(-1) rotate(-13deg);
+}
+#scene.mothday .mothVisual{
+  z-index:70 !important;
+}
+
 </style>
 </head>
 <body><main>
@@ -236,7 +289,17 @@ h1{margin:3px 0;font-size:29px}.sub{color:#6e5b4c;margin-bottom:12px}
 
 <section class="card">
 <div class="scene" id="scene"><div class="skyglow"></div><div class="sun">☀️</div><div class="moon">🌙</div><div class="mush m1">🍄</div><div class="mush m2">🍄</div><div class="log"></div><div class="moss"></div><div class="leaf"></div><div class="ground"></div>
-<div class="bear" id="bear"><span class="seg black"></span><span class="seg black"></span><span class="seg orange"></span><span class="seg orange"></span><span class="seg orange"></span><span class="seg black"></span><span class="seg black"></span><span class="seg black"></span><span class="head"><i class="eye"></i></span><div class="legs"><i class="leg"></i><i class="leg"></i><i class="leg"></i><i class="leg"></i></div></div><div id="cocoonVisual" class="cocoonVisual" aria-label="Maple's cocoon">
+<div class="bear" id="bear"><span class="seg black"></span><span class="seg black"></span><span class="seg orange"></span><span class="seg orange"></span><span class="seg orange"></span><span class="seg black"></span><span class="seg black"></span><span class="seg black"></span><span class="head"><i class="eye"></i></span><div class="legs"><i class="leg"></i><i class="leg"></i><i class="leg"></i><i class="leg"></i></div></div>
+<div id="mothGarden" class="mothGarden" aria-label="Maple's moth garden">
+  <div class="gardenFlower f1">🌼</div>
+  <div class="gardenFlower f2">🌸</div>
+  <div class="gardenFlower f3">🌼</div>
+  <div class="gardenFlower f4">🌺</div>
+  <div class="gardenLeaf l1">🌿</div>
+  <div class="gardenLeaf l2">🌿</div>
+  <div class="gardenGlow">✨</div>
+</div>
+<div id="cocoonVisual" class="cocoonVisual" aria-label="Maple's cocoon">
   <div class="cocoonShell"></div>
   <div class="cocoonLeaf">🍂</div>
   <div class="cocoonDust">✨</div>
@@ -378,6 +441,23 @@ $("reset").onclick=()=>{if(confirm("Start over with a new buddy?")){s={name:"Map
 const bear=$("bear"), scene=$("scene");
 bear.classList.add("roam");
 
+
+
+// v8: keep the moth garden and open-wing moth synchronized with life stage.
+(() => {
+  function syncMothGarden(){
+    const scene=$("scene"), garden=$("mothGarden"), moth=$("mothVisual");
+    if(!scene || !garden || !moth) return;
+    const isMoth = typeof s!=="undefined" && s.stage>=6;
+    scene.classList.toggle("mothday",isMoth);
+    garden.style.opacity=isMoth?"1":"0";
+    garden.style.visibility=isMoth?"visible":"hidden";
+    moth.style.opacity=isMoth?"1":"0";
+    moth.style.visibility=isMoth?"visible":"hidden";
+  }
+  setInterval(syncMothGarden,250);
+  window.syncMothGarden=syncMothGarden;
+})();
 
 // v6 lifecycle watcher: always makes the cocoon visible at stage 4.
 (() => {
