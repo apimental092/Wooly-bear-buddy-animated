@@ -163,6 +163,61 @@ h1{margin:3px 0;font-size:29px}.sub{color:#6e5b4c;margin-bottom:12px}
 .scene.transformed .mothVisual{opacity:1;animation:mothReveal 1.4s ease-out forwards,mothHover 2.2s ease-in-out 1.4s infinite}
 @keyframes mothReveal{0%{transform:translateX(-50%) translateY(15px) scale(.3);opacity:0}70%{transform:translateX(-50%) translateY(-5px) scale(1.08);opacity:1}100%{transform:translateX(-50%) translateY(0) scale(1);opacity:1}}
 
+
+/* v6: guaranteed-visible lifecycle overlay */
+#scene{position:relative;overflow:hidden}
+#cocoonVisual,#mothVisual{
+  position:absolute !important;
+  left:50% !important;
+  bottom:78px !important;
+  transform:translateX(-50%) !important;
+  z-index:50 !important;
+  pointer-events:none !important;
+}
+#cocoonVisual{
+  width:76px !important;height:116px !important;
+  display:block !important;
+}
+#cocoonVisual .cocoonShell{
+  display:block !important;
+  position:absolute !important;
+  left:50% !important;top:4px !important;
+  width:60px !important;height:98px !important;
+  transform:translateX(-50%) !important;
+  border-radius:50% 50% 48% 48% !important;
+  background:linear-gradient(135deg,#d0a06c,#795337 55%,#4b3020) !important;
+  border:3px solid #3e291b !important;
+  box-shadow:0 7px 14px #0006,inset 7px 5px 10px #fff3 !important;
+}
+#cocoonVisual .cocoonShell:before{
+  content:"" !important;
+  position:absolute !important;inset:9px !important;
+  border-radius:inherit !important;
+  border-left:3px dashed #e6c18a88 !important;
+  border-right:3px dashed #e6c18a55 !important;
+}
+#cocoonVisual .cocoonLeaf{
+  position:absolute !important;left:1px !important;bottom:-7px !important;
+  font-size:30px !important;
+}
+#cocoonVisual .cocoonDust{
+  position:absolute !important;right:-14px !important;top:5px !important;
+  font-size:19px !important;
+}
+#scene.cocooning #cocoonVisual{
+  opacity:1 !important;visibility:visible !important;
+  animation:cocoonPulse 2s ease-in-out infinite !important;
+}
+#scene.cocooning .bear{opacity:0 !important;visibility:hidden !important}
+@keyframes cocoonPulse{
+  0%,100%{transform:translateX(-50%) scale(1) rotate(-2deg)}
+  50%{transform:translateX(-50%) scale(1.06) rotate(2deg)}
+}
+#scene.mothday #mothVisual,#scene.transformed #mothVisual{
+  opacity:1 !important;visibility:visible !important;
+}
+#scene.mothday #cocoonVisual{opacity:0 !important;visibility:hidden !important}
+
 </style>
 </head>
 <body><main>
@@ -308,6 +363,47 @@ $("reset").onclick=()=>{if(confirm("Start over with a new buddy?")){s={name:"Map
 
 const bear=$("bear"), scene=$("scene");
 bear.classList.add("roam");
+
+
+// v6 lifecycle watcher: always makes the cocoon visible at stage 4.
+(() => {
+  let lastStage = s.stage;
+  function updateLifecycle() {
+    const scene = $("scene");
+    const cocoon = $("cocoonVisual");
+    const moth = $("mothVisual");
+    if (!scene || !cocoon || !moth) {
+      requestAnimationFrame(updateLifecycle);
+      return;
+    }
+
+    if (s.stage === 4) {
+      scene.classList.add("cocooning");
+      scene.classList.remove("mothday");
+      cocoon.style.opacity = "1";
+      cocoon.style.visibility = "visible";
+      moth.style.opacity = "0";
+      moth.style.visibility = "hidden";
+    } else if (s.stage >= 6) {
+      scene.classList.remove("cocooning");
+      scene.classList.add("mothday");
+      cocoon.style.opacity = "0";
+      cocoon.style.visibility = "hidden";
+      moth.style.opacity = "1";
+      moth.style.visibility = "visible";
+    } else {
+      scene.classList.remove("cocooning","mothday");
+      cocoon.style.opacity = "0";
+      cocoon.style.visibility = "hidden";
+      moth.style.opacity = "0";
+      moth.style.visibility = "hidden";
+    }
+
+    lastStage = s.stage;
+    requestAnimationFrame(updateLifecycle);
+  }
+  requestAnimationFrame(updateLifecycle);
+})();
 
 // Natural curl-up behavior. Maple curls into a little fuzzy ball, rests,
 // then uncurls and goes back to exploring.
