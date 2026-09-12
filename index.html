@@ -22,19 +22,19 @@ h1{margin:3px 0;font-size:29px}.sub{color:#6e5b4c;margin-bottom:12px}
 .log{position:absolute;right:7%;bottom:54px;width:135px;height:76px;border-radius:38px 38px 13px 13px;background:linear-gradient(90deg,#4b3526,#795b3d 48%,#4e3829);box-shadow:inset -10px -8px 15px #24170e88}.log:after{content:"";position:absolute;right:10px;top:10px;width:48px;height:48px;border-radius:50%;border:5px solid #5b422f;background:#8b6847}
 .leaf{position:absolute;bottom:42px;left:22%;width:125px;height:62px;border-radius:100% 5% 100% 5%;background:linear-gradient(145deg,#ad7a42,#79532d);transform:rotate(-9deg);box-shadow:0 5px 7px #1e160d44}.leaf:after{content:"";position:absolute;width:105px;height:3px;left:9px;top:30px;background:#5c3d23;transform:rotate(-7deg)}
 .mush{position:absolute;bottom:45px;font-size:28px}.m1{left:9%}.m2{left:74%}
-.bear{position:absolute;left:50%;bottom:76px;transform:translateX(-50%) rotate(-4deg);height:65px;display:flex;align-items:center;filter:drop-shadow(0 8px 4px #17100c55);transition:.25s}.bear.wiggle{animation:wiggle .28s ease}@keyframes wiggle{0%,100%{transform:translateX(-50%) rotate(-4deg)}50%{transform:translateX(-50%) rotate(4deg) translateY(-5px)}}
+.bear{transition:left .05s linear;position:absolute;left:50%;bottom:76px;transform:translateX(-50%) rotate(-4deg);height:65px;display:flex;align-items:center;filter:drop-shadow(0 8px 4px #17100c55);transition:.25s}.bear.wiggle{animation:wiggle .28s ease}@keyframes wiggle{0%,100%{transform:translateX(-50%) rotate(-4deg)}50%{transform:translateX(-50%) rotate(4deg) translateY(-5px)}}
 .seg{width:36px;height:58px;border-radius:50%;margin-left:-7px;position:relative;box-shadow:inset 5px 4px 8px #ffffff22,inset -7px -6px 8px #0007}.black{background:radial-gradient(circle at 35% 28%,#666 0 7%,#242424 20%,#080808 72%)}.orange{background:radial-gradient(circle at 35% 28%,#e89a4d 0 6%,#b85c24 28%,#6f2d11 80%)}
 .seg:after{content:"";position:absolute;inset:-3px;border-radius:50%;border:2px dotted #0006}
 .head{width:55px;height:55px;border-radius:50%;margin-left:-7px;position:relative;background:radial-gradient(circle at 35% 28%,#777 0 7%,#222 24%,#070707 72%);box-shadow:inset 5px 4px 8px #ffffff22,inset -7px -6px 8px #0008}.eye{position:absolute;width:7px;height:7px;border-radius:50%;background:#fff;right:11px;top:17px;box-shadow:0 0 0 2px #000}.eye:after{content:"";position:absolute;width:2px;height:2px;border-radius:50%;background:#111;left:2px;top:2px}
 .legs{position:absolute;left:8px;right:37px;bottom:-11px;display:flex;justify-content:space-between}.leg{width:7px;height:17px;background:#151515;border-radius:9px;transform:rotate(12deg)}
-@media(max-width:430px){.scene{height:260px}.seg{width:29px;height:48px}.head{width:46px;height:46px}.bear{bottom:71px}.log{width:115px}.leaf{left:18%}}
+@media(max-width:430px){.scene{height:260px}.seg{width:29px;height:48px}.head{width:46px;height:46px}.bear{transition:left .05s linear;bottom:71px}.log{width:115px}.leaf{left:18%}}
 .name{text-align:center;font-size:23px;font-weight:850;margin:9px 0 5px}.msg{background:#f4eadb;padding:11px;border-radius:15px;text-align:center;min-height:43px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.stat{background:#f6ecdf;border-radius:16px;padding:10px}.stat b{display:block;font-size:11px;color:#6d594a}.stat strong{font-size:17px}.bar{height:9px;background:#dfd1c0;border-radius:99px;margin-top:6px;overflow:hidden}.fill{height:100%;border-radius:99px;transition:.3s;background:var(--orange)}
 .actions{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:10px}button,input{font:inherit}button{min-height:47px;border:0;border-radius:14px;padding:10px 11px;background:#eadbc9;color:#30251e;font-weight:760}button.primary{background:var(--wood);color:#fffaf1}button:active{transform:scale(.98)}input{width:100%;padding:13px;border:1px solid #ccb89d;border-radius:13px;margin:7px 0 9px;background:#fffdf8}
 .pills{display:flex;gap:6px;flex-wrap:wrap}.pill{padding:7px 9px;border-radius:999px;background:#eadbc9;font-size:12px}.muted{color:#756353;font-size:13px}.badge{display:flex;gap:10px;align-items:center;background:#f7eee2;border-radius:14px;padding:9px;margin-top:7px}.badge>span:first-child{font-size:25px}.footer{text-align:center;color:#7d6b5b;font-size:12px;margin-top:16px}
 
 /* Living Maple animations */
-.bear{will-change:transform}
+.bear{transition:left .05s linear;will-change:transform}
 .bear.roam{animation:mapleRoam 13s ease-in-out infinite alternate}
 @keyframes mapleRoam{
   0%{left:24%;transform:translateX(-50%) rotate(-5deg)}
@@ -55,7 +55,7 @@ h1{margin:3px 0;font-size:29px}.sub{color:#6e5b4c;margin-bottom:12px}
 @keyframes happy{0%,100%{transform:translateX(-50%) rotate(-4deg)}50%{transform:translateX(-50%) rotate(7deg) translateY(-9px)}}
 .sparkle{position:absolute;pointer-events:none;font-size:22px;animation:spark 1s ease-out forwards}
 @keyframes spark{0%{opacity:0;transform:scale(.4) translateY(8px)}25%{opacity:1}100%{opacity:0;transform:scale(1.3) translateY(-42px)}}
-@media(prefers-reduced-motion:reduce){.bear.roam,.bear.roam .seg,.bear.roam .leg,.bear.eat,.bear.sleep,.bear.happy{animation:none}}
+
 
 </style>
 </head>
@@ -122,6 +122,34 @@ $("reset").onclick=()=>{if(confirm("Start over with a new buddy?")){s={name:"Map
 
 const bear=$("bear"), scene=$("scene");
 bear.classList.add("roam");
+// Backup movement engine: Maple physically crawls across the habitat with JS.
+// This is independent of CSS keyframes so her movement remains visible on iPhone.
+(() => {
+  let x = 24;
+  let direction = 1;
+  let last = performance.now();
+  const speed = 7.5; // percent of scene width per second
+
+  function crawl(now) {
+    const dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
+
+    // Only wander while Maple is a caterpillar.
+    if (typeof s !== "undefined" && s.stage < 3 && !document.hidden) {
+      x += direction * speed * dt;
+      if (x >= 74) { x = 74; direction = -1; }
+      if (x <= 24) { x = 24; direction = 1; }
+
+      const sway = Math.sin(now / 220) * 3;
+      bear.style.left = x + "%";
+      bear.style.transform =
+        "translateX(-50%) rotate(" + (direction * 2 + sway) + "deg)";
+    }
+
+    requestAnimationFrame(crawl);
+  }
+  requestAnimationFrame(crawl);
+})();
 let sleepTimer=null;
 function sparkle(symbol="✨"){
   const x=document.createElement("span"); x.className="sparkle"; x.textContent=symbol;
