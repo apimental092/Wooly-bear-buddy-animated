@@ -57,6 +57,112 @@ h1{margin:3px 0;font-size:29px}.sub{color:#6e5b4c;margin-bottom:12px}
 @keyframes spark{0%{opacity:0;transform:scale(.4) translateY(8px)}25%{opacity:1}100%{opacity:0;transform:scale(1.3) translateY(-42px)}}
 
 
+
+/* Maple's cozy curl-up animation */
+.bear.curling {
+  animation: mapleCurl .9s ease-in-out forwards !important;
+  transform-origin: 50% 72%;
+}
+.bear.curling .seg {
+  animation: segCurl .9s ease-in-out forwards !important;
+}
+.bear.curling .leg {
+  animation: legTuck .9s ease-in-out forwards !important;
+}
+@keyframes mapleCurl {
+  0%   { transform: translateX(-50%) rotate(0deg) scale(1); }
+  55%  { transform: translateX(-50%) rotate(12deg) scale(.82); }
+  100% { transform: translateX(-50%) rotate(18deg) scale(.68); }
+}
+@keyframes segCurl {
+  0%   { transform: translateY(0) scaleX(1); }
+  55%  { transform: translateY(7px) scaleX(.9); }
+  100% { transform: translateY(12px) scaleX(.78); }
+}
+@keyframes legTuck {
+  0%   { opacity: 1; transform: scaleY(1); }
+  100% { opacity: .25; transform: scaleY(.35) translateY(5px); }
+}
+.bear.curled {
+  transform: translateX(-50%) rotate(18deg) scale(.68) !important;
+}
+.bear.curled .seg {
+  transform: translateY(12px) scaleX(.78) !important;
+}
+.bear.curled .leg {
+  opacity: .25;
+  transform: scaleY(.35) translateY(5px) !important;
+}
+.bear.uncurling {
+  animation: mapleUncurl .9s ease-in-out forwards !important;
+}
+@keyframes mapleUncurl {
+  0%   { transform: translateX(-50%) rotate(18deg) scale(.68); }
+  100% { transform: translateX(-50%) rotate(0deg) scale(1); }
+}
+
+
+/* Maple's full life cycle: caterpillar -> cocoon -> Isabella tiger moth */
+.cocoonVisual,.mothVisual{
+  position:absolute;left:50%;bottom:67px;transform:translateX(-50%);
+  opacity:0;pointer-events:none;z-index:6;
+}
+.cocoonVisual{width:72px;height:110px}
+.cocoonShell{
+  position:absolute;left:50%;top:5px;transform:translateX(-50%);
+  width:58px;height:94px;border-radius:48% 52% 50% 50%;
+  background:radial-gradient(circle at 32% 24%,#c89a68 0 8%,#8d633e 28%,#5b3e29 80%);
+  box-shadow:inset 6px 4px 9px #fff3,inset -8px -10px 13px #2d1c10aa,0 7px 10px #24170c55;
+}
+.cocoonShell:after{
+  content:"";position:absolute;inset:8px;border-radius:inherit;
+  border-left:2px dashed #d4af7c66;border-right:2px dashed #d4af7c44;
+}
+.cocoonLeaf{position:absolute;bottom:-5px;left:2px;font-size:30px;transform:rotate(-20deg)}
+.cocoonDust{position:absolute;right:-13px;top:8px;font-size:18px;animation:cocoonSpark 1.8s ease-in-out infinite}
+@keyframes cocoonSpark{0%,100%{opacity:.2;transform:translateY(5px) scale(.8)}50%{opacity:1;transform:translateY(-7px) scale(1)}}
+
+.scene.cocooning .bear{opacity:0 !important}
+.scene.cocooning .cocoonVisual{opacity:1;animation:cocoonBreathe 2.2s ease-in-out infinite}
+@keyframes cocoonBreathe{0%,100%{transform:translateX(-50%) scale(1) rotate(-2deg)}50%{transform:translateX(-50%) scale(1.05) rotate(2deg)}}
+
+.mothVisual{width:150px;height:120px;bottom:86px}
+.scene.mothday .bear{opacity:0 !important}
+.scene.mothday .mothVisual{opacity:1;animation:mothHover 2.2s ease-in-out infinite}
+.mothWing{
+  position:absolute;top:18px;width:67px;height:88px;
+  border-radius:80% 18% 72% 28%;
+  background:
+    radial-gradient(circle at 62% 38%,#d18b43 0 7%,transparent 8%),
+    radial-gradient(circle at 40% 58%,#4a3428 0 10%,transparent 11%),
+    linear-gradient(145deg,#e0a15c,#7a4a2c 62%,#3b2921);
+  border:2px solid #4a3021;
+  box-shadow:inset 5px 4px 8px #fff3,0 7px 10px #24170c55;
+}
+.leftWing{left:7px;transform-origin:100% 82%;transform:rotate(12deg)}
+.rightWing{right:7px;transform-origin:0 82%;transform:scaleX(-1) rotate(12deg)}
+.mothBody{
+  position:absolute;left:50%;top:23px;transform:translateX(-50%);
+  width:18px;height:78px;border-radius:50%;
+  background:linear-gradient(#d6b07b 0 12%,#6c4a32 13% 24%,#d6b07b 25% 37%,#6c4a32 38% 50%,#d6b07b 51% 63%,#5b4030 64% 100%);
+  box-shadow:inset 3px 2px 5px #fff4;
+}
+.mothAntenna{position:absolute;top:14px;width:34px;height:22px;border-top:2px solid #4b3427;border-radius:50%}
+.a1{left:42px;transform:rotate(-20deg)}.a2{right:42px;transform:scaleX(-1) rotate(-20deg)}
+.mothDust{position:absolute;font-size:18px;animation:dustFloat 2s ease-in-out infinite}
+.d1{left:-5px;top:3px}.d2{right:-3px;bottom:8px;animation-delay:.8s}
+@keyframes dustFloat{0%,100%{opacity:.3;transform:translateY(5px)}50%{opacity:1;transform:translateY(-8px)}}
+@keyframes mothHover{0%,100%{transform:translateX(-50%) translateY(3px) rotate(-2deg)}50%{transform:translateX(-50%) translateY(-9px) rotate(2deg)}}
+
+.scene.emerging .cocoonVisual{opacity:1;animation:cocoonBreak .9s ease-in forwards}
+.scene.emerging .cocoonShell{animation:shellShake .55s ease-in-out 2}
+.scene.emerging .mothVisual{opacity:0}
+@keyframes shellShake{0%,100%{transform:translateX(-50%) rotate(0)}25%{transform:translateX(-50%) rotate(-6deg)}75%{transform:translateX(-50%) rotate(6deg)}}
+@keyframes cocoonBreak{0%{transform:translateX(-50%) scale(1);opacity:1}100%{transform:translateX(-50%) scale(1.35);opacity:0}}
+
+.scene.transformed .mothVisual{opacity:1;animation:mothReveal 1.4s ease-out forwards,mothHover 2.2s ease-in-out 1.4s infinite}
+@keyframes mothReveal{0%{transform:translateX(-50%) translateY(15px) scale(.3);opacity:0}70%{transform:translateX(-50%) translateY(-5px) scale(1.08);opacity:1}100%{transform:translateX(-50%) translateY(0) scale(1);opacity:1}}
+
 </style>
 </head>
 <body><main>
@@ -65,6 +171,19 @@ h1{margin:3px 0;font-size:29px}.sub{color:#6e5b4c;margin-bottom:12px}
 <section class="card">
 <div class="scene" id="scene"><div class="skyglow"></div><div class="sun">☀️</div><div class="moon">🌙</div><div class="mush m1">🍄</div><div class="mush m2">🍄</div><div class="log"></div><div class="moss"></div><div class="leaf"></div><div class="ground"></div>
 <div class="bear" id="bear"><span class="seg black"></span><span class="seg black"></span><span class="seg orange"></span><span class="seg orange"></span><span class="seg orange"></span><span class="seg black"></span><span class="seg black"></span><span class="seg black"></span><span class="head"><i class="eye"></i></span><div class="legs"><i class="leg"></i><i class="leg"></i><i class="leg"></i><i class="leg"></i></div></div></div>
+
+<div id="cocoonVisual" class="cocoonVisual" aria-label="Maple's cocoon">
+  <div class="cocoonShell"></div>
+  <div class="cocoonLeaf">🍂</div>
+  <div class="cocoonDust">✨</div>
+</div>
+<div id="mothVisual" class="mothVisual" aria-label="Maple the Isabella tiger moth">
+  <div class="mothWing leftWing"></div>
+  <div class="mothWing rightWing"></div>
+  <div class="mothBody"></div>
+  <div class="mothAntenna a1"></div><div class="mothAntenna a2"></div>
+  <div class="mothDust d1">✨</div><div class="mothDust d2">🌼</div>
+</div>
 <div class="name" id="nameDisplay">Maple</div>
 <div class="msg" id="msg" aria-live="polite">Maple is exploring her little woodland home. 🐛🍁</div>
 </section>
@@ -100,10 +219,67 @@ function render(){
  ["hunger","happy","clean"].forEach(k=>$(k).style.width=s[k]+"%");$("growth").style.width=(Math.min(s.growth,10)*10)+"%";
  $("stage").textContent=stageNames[i]+" • Growth "+Math.min(s.growth,10)+"/10";$("scene").classList.toggle("night",s.weather%2===1);
  $("cater").style.opacity=s.stage>=4?".4":"1";$("cocoon").style.opacity=s.stage>=4&&s.stage<6?"1":".4";$("moth").style.opacity=s.stage>=6?"1":".4";
- $("life").textContent=s.stage>=6?"🥹 MOTH DAY! Maple is now an Isabella tiger moth! Give those wings time to dry.":s.stage>=4?"🟤 Cocoon time! Maple is doing the amazing transformation thing.":"Keep caring for Maple. Every leaf, cozy spot, and check-in helps.";
+ const scene=$("scene");
+ scene.classList.toggle("cocooning",s.stage>=4&&s.stage<6);
+ scene.classList.toggle("mothday",s.stage>=6);
+ $("life").textContent=s.stage>=6?"🥹 MOTH DAY! Maple emerged as an Isabella tiger moth! Her wings are ready.":s.stage>=4?"🟤 Cocoon time! Maple is inside, changing into a moth…":"Keep caring for Maple. Every leaf, cozy spot, and check-in helps.";
  let b=[];if(s.name)b.push(["🏷️","Named Buddy"]);if(s.growth>=1)b.push(["🌿","First Meal"]);if(s.frass)b.push(["💩","Frass Keeper"]);if(s.growth>=4)b.push(["🍂","Cozy Home"]);if(s.stage>=4)b.push(["🟤","Cocoon Watcher"]);if(s.stage>=6)b.push(["🦋","Moth Master"]);
  $("badges").innerHTML=b.map(v=>'<div class="badge"><span>'+v[0]+'</span><span><b>'+v[1]+'</b></span></div>').join("")||'<div class="muted">Your first achievement is waiting! 🥹</div>';
 }
+
+// Compressed game life cycle: once Maple reaches cocoon stage, the pupa rests
+// for 20 seconds, then she emerges as an Isabella tiger moth.
+(() => {
+  const COCOON_MS = 20000;
+  let emergenceTimer = null;
+
+  function startCocoonTimer() {
+    if (s.stage !== 4) return;
+    if (!s.cocoonStart) {
+      s.cocoonStart = Date.now();
+      save();
+    }
+    schedule();
+  }
+
+  function schedule() {
+    if (emergenceTimer) clearTimeout(emergenceTimer);
+    if (s.stage !== 4 || !s.cocoonStart) return;
+    const remaining = Math.max(0, COCOON_MS - (Date.now() - s.cocoonStart));
+    if (remaining <= 0) {
+      transformToMoth();
+    } else {
+      emergenceTimer = setTimeout(transformToMoth, remaining);
+    }
+  }
+
+  function transformToMoth() {
+    if (s.stage !== 4) return;
+    const scene = $("scene");
+    scene.classList.add("emerging");
+    $("msg").textContent = "Something is happening inside Maple's cocoon… 🟤✨";
+    setTimeout(() => {
+      s.stage = 6;
+      s.growth = 10;
+      s.hunger = 100;
+      s.happy = 100;
+      s.cocoonStart = null;
+      save();
+      scene.classList.remove("emerging");
+      scene.classList.add("transformed");
+      render();
+      $("msg").textContent = "SHE EMERGED! 🦋 Maple is an Isabella tiger moth!";
+      sparkle("🦋");
+      setTimeout(() => scene.classList.remove("transformed"), 1600);
+    }, 1100);
+  }
+
+  window.mapleStartCocoon = startCocoonTimer;
+  window.mapleTransformNow = transformToMoth;
+
+  if (s.stage === 4) startCocoonTimer();
+})();
+
 function act(k){
  if(s.stage>=6){$("msg").textContent="Maple is a moth now! 🦋 Let her enjoy the garden.";return}
  if(k==="leaf"){s.hunger=clamp(s.hunger+23);s.happy=clamp(s.happy+5);$("msg").textContent="CRONCH CRONCH! Maple is munching a fresh leaf. 🌿"}
@@ -112,16 +288,82 @@ function act(k){
  if(k==="check"){s.happy=clamp(s.happy+12);$("msg").textContent="Wiggle wiggle! Maple knows you're there. 🥹"}
  if(k==="clean"){s.frass++;s.clean=100;$("msg").textContent="Fresh habitat! Maple's home is tidy again. 💩✨"}
  if(k==="weather"){s.weather++;$("msg").textContent=s.weather%2?"Night has fallen. Maple is getting sleepy. 🌙":"The sun is back! ☀️"}
- s.growth++;if(s.growth>=10)s.stage=6;else if(s.growth>=7)s.stage=4;else if(s.growth>=5)s.stage=3;else if(s.growth>=3)s.stage=2;else if(s.growth>=1)s.stage=1;
+ s.growth++;
+ if(s.stage < 4){
+   if(s.growth>=7){s.stage=4;s.cocoonStart=Date.now();$("msg").textContent="Maple found a safe spot and spun her cocoon! 🟤🍂";setTimeout(()=>window.mapleStartCocoon&&window.mapleStartCocoon(),50);}
+   else if(s.growth>=5)s.stage=3;
+   else if(s.growth>=3)s.stage=2;
+   else if(s.growth>=1)s.stage=1;
+ }
  save();render();$("bear").classList.remove("wiggle");void $("bear").offsetWidth;$("bear").classList.add("wiggle");
 }
 $("saveName").onclick=()=>{let n=$("name").value.trim().slice(0,20);s.name=n||"Maple";save();render();$("msg").textContent="Hi, "+s.name+"! 🧡 This little buddy is yours.";};
 ["leafBtn","clover","cozy","check","cleanBtn","weather"].forEach((id,i)=>{const keys=["leaf","clover","cozy","check","clean","weather"];$(id).onclick=()=>act(keys[i])});
-$("celebrate").onclick=()=>{$("msg").textContent=s.stage<6?"Keep caring for Maple — moth day comes after enough growth! 🐛🍁":"🎉 Welcome to Maple's moth garden! 🦋🌸"};
+$("celebrate").onclick=()=>{
+ if(s.stage===4){ $("msg").textContent="Let's peek inside the cocoon… 🟤✨"; window.mapleTransformNow&&window.mapleTransformNow(); }
+ else if(s.stage<4){ $("msg").textContent="Maple needs to grow a little more before cocoon time. 🐛🍃"; }
+ else {$("msg").textContent="🎉 Welcome to Maple's moth garden! 🦋🌸";}
+};
 $("reset").onclick=()=>{if(confirm("Start over with a new buddy?")){s={name:"Maple",hunger:70,happy:70,clean:85,growth:0,stage:0,frass:0,weather:0};save();render();$("msg").textContent="A brand-new adventure for Maple! 🐛🍁"}};
 
 const bear=$("bear"), scene=$("scene");
 bear.classList.add("roam");
+
+// Natural curl-up behavior. Maple curls into a little fuzzy ball, rests,
+// then uncurls and goes back to exploring.
+(() => {
+  let curled = false;
+  let nextCurl = performance.now() + 22000 + Math.random() * 18000;
+
+  function setSegmentsForCurl() {
+    bear.querySelectorAll(".seg").forEach((el, i) => {
+      el.style.setProperty("--curl-i", i);
+    });
+  }
+
+  function curlUp() {
+    if (typeof s !== "undefined" && s.stage < 3 && !curled) {
+      curled = true;
+      bear.classList.remove("roam");
+      bear.classList.remove("uncurling");
+      bear.classList.add("curling");
+      setTimeout(() => {
+        bear.classList.remove("curling");
+        bear.classList.add("curled");
+      }, 900);
+      if (typeof msg !== "undefined") {
+        msg.textContent = "Maple curls up into a cozy little ball. 🥹🍂";
+      }
+      setTimeout(uncurl, 6500);
+    }
+  }
+
+  function uncurl() {
+    if (!curled) return;
+    bear.classList.remove("curled");
+    bear.classList.add("uncurling");
+    setTimeout(() => {
+      bear.classList.remove("uncurling");
+      bear.classList.add("roam");
+      curled = false;
+      nextCurl = performance.now() + 22000 + Math.random() * 18000;
+      if (typeof msg !== "undefined") {
+        msg.textContent = "Maple uncurls and starts exploring again. 🐛🍃";
+      }
+    }, 900);
+  }
+
+  window.mapleCurlUp = curlUp;
+
+  function curlClock(now) {
+    if (!curled && now >= nextCurl && typeof s !== "undefined" && s.stage < 3) {
+      curlUp();
+    }
+    requestAnimationFrame(curlClock);
+  }
+  requestAnimationFrame(curlClock);
+})();
+
 // Backup movement engine: Maple physically crawls across the habitat with JS.
 // This is independent of CSS keyframes so her movement remains visible on iPhone.
 (() => {
@@ -135,7 +377,7 @@ bear.classList.add("roam");
     last = now;
 
     // Only wander while Maple is a caterpillar.
-    if (typeof s !== "undefined" && s.stage < 3 && !document.hidden) {
+    if (typeof s !== "undefined" && s.stage < 4 && !document.hidden && !bear.classList.contains("curled") && !bear.classList.contains("curling") && !bear.classList.contains("uncurling")) {
       x += direction * speed * dt;
       if (x >= 74) { x = 74; direction = -1; }
       if (x <= 24) { x = 24; direction = 1; }
