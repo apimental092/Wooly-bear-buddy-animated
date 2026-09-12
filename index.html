@@ -282,6 +282,54 @@ h1{margin:3px 0;font-size:29px}.sub{color:#6e5b4c;margin-bottom:12px}
   z-index:70 !important;
 }
 
+
+/* v9: unmistakably open, spread wings */
+#scene .mothVisual{
+  width:220px !important;height:145px !important;
+  bottom:88px !important;
+}
+#scene .mothWing{
+  position:absolute !important;
+  top:24px !important;
+  width:104px !important;height:78px !important;
+  border-radius:78% 22% 70% 30% !important;
+  border:2px solid #4a3021 !important;
+  background:
+    radial-gradient(circle at 72% 28%,#e2ad68 0 7%,transparent 8%),
+    radial-gradient(circle at 48% 45%,#4a3028 0 10%,transparent 11%),
+    radial-gradient(circle at 69% 68%,#55372a 0 9%,transparent 10%),
+    radial-gradient(circle at 30% 70%,#c77b3f 0 8%,transparent 9%),
+    linear-gradient(145deg,#edc18a 0 32%,#d88943 58%,#69432c 100%) !important;
+  box-shadow:inset 5px 4px 9px #fff4,0 6px 10px #24170c55 !important;
+}
+#scene .leftWing{
+  left:0 !important;
+  transform-origin:100% 80% !important;
+  transform:rotate(-17deg) !important;
+}
+#scene .rightWing{
+  right:0 !important;
+  transform-origin:0 80% !important;
+  transform:scaleX(-1) rotate(-17deg) !important;
+}
+#scene.mothday .leftWing{
+  animation:openLeftWing 2.1s ease-in-out infinite alternate !important;
+}
+#scene.mothday .rightWing{
+  animation:openRightWing 2.1s ease-in-out infinite alternate !important;
+}
+@keyframes openLeftWing{
+  0%{transform:rotate(-17deg) scaleY(1)}
+  100%{transform:rotate(-11deg) scaleY(.92)}
+}
+@keyframes openRightWing{
+  0%{transform:scaleX(-1) rotate(-17deg) scaleY(1)}
+  100%{transform:scaleX(-1) rotate(-11deg) scaleY(.92)}
+}
+/* keep the body in front of the open wings */
+#scene .mothBody{z-index:3 !important}
+#scene .mothWing{z-index:2 !important}
+
 </style>
 </head>
 <body><main>
@@ -352,7 +400,7 @@ function render(){
  scene.classList.toggle("cocooning",s.stage>=4&&s.stage<6);
  scene.classList.toggle("mothday",s.stage>=6);
  $("life").textContent=s.stage>=6?"🥹 MOTH DAY! Maple emerged as an Isabella tiger moth! Her wings are ready.":s.stage>=4?"🟤 Cocoon time! Maple is inside, changing into a moth…":"Keep caring for Maple. Every leaf, cozy spot, and check-in helps.";
- if(s.stage>=6 && !$("msg").dataset.custom) $("msg").textContent="Maple is fluttering around her woodland home. 🦋🌼";
+ if(s.stage>=6 && !$("msg").dataset.custom) $("msg").textContent="Maple is spreading her wings in her moth garden. 🦋🌼";
  else if(s.stage>=4 && !$("msg").dataset.custom) $("msg").textContent="Maple is safely tucked inside her cocoon. 🟤🍂";
  else if(s.stage<4 && !$("msg").dataset.custom) $("msg").textContent="Maple is exploring her little woodland home. 🐛🍁";
  let b=[];if(s.name)b.push(["🏷️","Named Buddy"]);if(s.growth>=1)b.push(["🌿","First Meal"]);if(s.frass)b.push(["💩","Frass Keeper"]);if(s.growth>=4)b.push(["🍂","Cozy Home"]);if(s.stage>=4)b.push(["🟤","Cocoon Watcher"]);if(s.stage>=6)b.push(["🦋","Moth Master"]);
