@@ -218,6 +218,17 @@ h1{margin:3px 0;font-size:29px}.sub{color:#6e5b4c;margin-bottom:12px}
 }
 #scene.mothday #cocoonVisual{opacity:0 !important;visibility:hidden !important}
 
+
+/* v7: lifecycle characters belong to the habitat, never the controls below */
+#scene{position:relative !important;overflow:hidden !important}
+#scene #cocoonVisual,#scene #mothVisual{
+  left:50% !important;
+  bottom:78px !important;
+  z-index:60 !important;
+}
+#scene #mothVisual{width:150px !important;height:120px !important}
+#scene #cocoonVisual{width:76px !important;height:116px !important}
+
 </style>
 </head>
 <body><main>
@@ -225,9 +236,7 @@ h1{margin:3px 0;font-size:29px}.sub{color:#6e5b4c;margin-bottom:12px}
 
 <section class="card">
 <div class="scene" id="scene"><div class="skyglow"></div><div class="sun">☀️</div><div class="moon">🌙</div><div class="mush m1">🍄</div><div class="mush m2">🍄</div><div class="log"></div><div class="moss"></div><div class="leaf"></div><div class="ground"></div>
-<div class="bear" id="bear"><span class="seg black"></span><span class="seg black"></span><span class="seg orange"></span><span class="seg orange"></span><span class="seg orange"></span><span class="seg black"></span><span class="seg black"></span><span class="seg black"></span><span class="head"><i class="eye"></i></span><div class="legs"><i class="leg"></i><i class="leg"></i><i class="leg"></i><i class="leg"></i></div></div></div>
-
-<div id="cocoonVisual" class="cocoonVisual" aria-label="Maple's cocoon">
+<div class="bear" id="bear"><span class="seg black"></span><span class="seg black"></span><span class="seg orange"></span><span class="seg orange"></span><span class="seg orange"></span><span class="seg black"></span><span class="seg black"></span><span class="seg black"></span><span class="head"><i class="eye"></i></span><div class="legs"><i class="leg"></i><i class="leg"></i><i class="leg"></i><i class="leg"></i></div></div><div id="cocoonVisual" class="cocoonVisual" aria-label="Maple's cocoon">
   <div class="cocoonShell"></div>
   <div class="cocoonLeaf">🍂</div>
   <div class="cocoonDust">✨</div>
@@ -239,6 +248,8 @@ h1{margin:3px 0;font-size:29px}.sub{color:#6e5b4c;margin-bottom:12px}
   <div class="mothAntenna a1"></div><div class="mothAntenna a2"></div>
   <div class="mothDust d1">✨</div><div class="mothDust d2">🌼</div>
 </div>
+</div>
+
 <div class="name" id="nameDisplay">Maple</div>
 <div class="msg" id="msg" aria-live="polite">Maple is exploring her little woodland home. 🐛🍁</div>
 </section>
@@ -278,6 +289,9 @@ function render(){
  scene.classList.toggle("cocooning",s.stage>=4&&s.stage<6);
  scene.classList.toggle("mothday",s.stage>=6);
  $("life").textContent=s.stage>=6?"🥹 MOTH DAY! Maple emerged as an Isabella tiger moth! Her wings are ready.":s.stage>=4?"🟤 Cocoon time! Maple is inside, changing into a moth…":"Keep caring for Maple. Every leaf, cozy spot, and check-in helps.";
+ if(s.stage>=6 && !$("msg").dataset.custom) $("msg").textContent="Maple is fluttering around her woodland home. 🦋🌼";
+ else if(s.stage>=4 && !$("msg").dataset.custom) $("msg").textContent="Maple is safely tucked inside her cocoon. 🟤🍂";
+ else if(s.stage<4 && !$("msg").dataset.custom) $("msg").textContent="Maple is exploring her little woodland home. 🐛🍁";
  let b=[];if(s.name)b.push(["🏷️","Named Buddy"]);if(s.growth>=1)b.push(["🌿","First Meal"]);if(s.frass)b.push(["💩","Frass Keeper"]);if(s.growth>=4)b.push(["🍂","Cozy Home"]);if(s.stage>=4)b.push(["🟤","Cocoon Watcher"]);if(s.stage>=6)b.push(["🦋","Moth Master"]);
  $("badges").innerHTML=b.map(v=>'<div class="badge"><span>'+v[0]+'</span><span><b>'+v[1]+'</b></span></div>').join("")||'<div class="muted">Your first achievement is waiting! 🥹</div>';
 }
@@ -312,7 +326,7 @@ function render(){
     if (s.stage !== 4) return;
     const scene = $("scene");
     scene.classList.add("emerging");
-    $("msg").textContent = "Something is happening inside Maple's cocoon… 🟤✨";
+    $("msg").textContent = "Something is happening inside Maple's cocoon… 🟤✨"; $("msg").dataset.custom="1";
     setTimeout(() => {
       s.stage = 6;
       s.growth = 10;
@@ -323,7 +337,7 @@ function render(){
       scene.classList.remove("emerging");
       scene.classList.add("transformed");
       render();
-      $("msg").textContent = "SHE EMERGED! 🦋 Maple is an Isabella tiger moth!";
+      $("msg").textContent = "SHE EMERGED! 🦋 Maple is an Isabella tiger moth!"; $("msg").dataset.custom="1";
       sparkle("🦋");
       setTimeout(() => scene.classList.remove("transformed"), 1600);
     }, 1100);
